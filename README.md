@@ -15,7 +15,13 @@
 
 ## スクリーンショット
 
-(準備中)
+| 設定画面 | タイマー実行中(縦) |
+| --- | --- |
+| ![設定画面](./docs/screenshots/setup.jpg) | ![タイマー実行中(縦)](./docs/screenshots/timer-portrait.jpg) |
+
+| タイマー実行中(横) | アラーム音量設定 |
+| --- | --- |
+| ![タイマー実行中(横)](./docs/screenshots/timer-landscape.jpg) | ![アラーム音量設定](./docs/screenshots/settings.jpg) |
 
 ## 動作環境
 
