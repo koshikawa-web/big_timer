@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "big_timer",
+    "slug": "big_timer",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.big_timer"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-status-bar",
+      "./plugins/withShowOverLockscreen.js",
+      "expo-audio"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "505ad824-7c3d-43ed-9562-f51d2ee32ef0"
+      }
+    },
+    "owner": "koshikawa.net"
+  }
+}
