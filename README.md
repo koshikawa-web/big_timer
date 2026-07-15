@@ -46,7 +46,7 @@ npx eas-cli build --platform android --profile preview
 
 ビルドが完了すると、インストール用のリンク(`https://expo.dev/artifacts/eas/....apk`)が発行されます。
 
-設計の背景や各機能の意図は [ARCHITECTURE.md](./ARCHITECTURE.md) にまとめています。
+設計の背景や各機能の意図は [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) にまとめています。
 
 ## 技術構成
 
