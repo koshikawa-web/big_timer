@@ -7,9 +7,12 @@ export const DEFAULT_DURATION_SECONDS = 5 * 60;
 const MAX_DURATION_SECONDS = 59 * 60 + 59;
 
 function sanitize(value: number): number {
-  return Number.isFinite(value) && value > 0
-    ? Math.min(MAX_DURATION_SECONDS, Math.floor(value))
-    : DEFAULT_DURATION_SECONDS;
+  if (!Number.isFinite(value)) return DEFAULT_DURATION_SECONDS;
+  // Floor before checking positivity — a fractional value like 0.5 would
+  // otherwise pass a `value > 0` check but floor to 0 afterwards, silently
+  // producing the one duration this function is supposed to never return.
+  const floored = Math.floor(value);
+  return floored > 0 ? Math.min(MAX_DURATION_SECONDS, floored) : DEFAULT_DURATION_SECONDS;
 }
 
 export async function getLastDuration(): Promise<number> {

@@ -51,8 +51,9 @@ export default function TimerScreen({ totalSeconds, onExit }: TimerScreenProps) 
     if (previousSystemVolumeRef.current !== null) {
       try {
         VolumeControl.setMusicVolume(alarmVolumeRef.current);
-      } catch {
+      } catch (error) {
         // best-effort; keep ringing even if volume couldn't be forced
+        console.warn("[TimerScreen] failed to force alarm volume", error);
       }
     }
     // This runs from useCountdown's setInterval tick (via onFinish), where
@@ -62,9 +63,10 @@ export default function TimerScreen({ totalSeconds, onExit }: TimerScreenProps) 
     // the countdown itself.
     try {
       player.play();
-    } catch {
+    } catch (error) {
       // best-effort; the countdown still reaches "finished" and shows the
       // dismiss screen even if the alarm sound couldn't start
+      console.warn("[TimerScreen] failed to start alarm playback", error);
     }
   }, []);
 
@@ -78,8 +80,9 @@ export default function TimerScreen({ totalSeconds, onExit }: TimerScreenProps) 
       let previousVolume: number | null = null;
       try {
         previousVolume = VolumeControl.getMusicVolume();
-      } catch {
+      } catch (error) {
         previousVolume = null;
+        console.warn("[TimerScreen] failed to capture baseline volume", error);
       }
       let volume = DEFAULT_ALARM_VOLUME;
       try {
@@ -91,9 +94,10 @@ export default function TimerScreen({ totalSeconds, onExit }: TimerScreenProps) 
             playsInSilentMode: true,
           }),
         ]);
-      } catch {
+      } catch (error) {
         // best-effort; still try to create the player below with defaults
         // rather than leaving the alarm silently unprepared
+        console.warn("[TimerScreen] failed to load alarm volume / set audio mode", error);
       }
       if (cancelled) return;
       alarmVolumeRef.current = volume;
@@ -106,9 +110,10 @@ export default function TimerScreen({ totalSeconds, onExit }: TimerScreenProps) 
         if (shouldPlayRef.current) {
           applyVolumeAndPlay(player);
         }
-      } catch {
+      } catch (error) {
         // best-effort; if the player can't be created at all, the countdown
         // still finishes and the dismiss screen still works without sound
+        console.warn("[TimerScreen] failed to create alarm player", error);
       }
     })();
     return () => {
@@ -131,15 +136,17 @@ export default function TimerScreen({ totalSeconds, onExit }: TimerScreenProps) 
       try {
         player.pause();
         player.remove();
-      } catch {
+      } catch (error) {
         // player may already be released
+        console.warn("[TimerScreen] failed to stop/release alarm player", error);
       }
     }
     if (previousSystemVolumeRef.current !== null) {
       try {
         VolumeControl.setMusicVolume(previousSystemVolumeRef.current);
-      } catch {
+      } catch (error) {
         // best-effort restore
+        console.warn("[TimerScreen] failed to restore system volume", error);
       }
       previousSystemVolumeRef.current = null;
     }

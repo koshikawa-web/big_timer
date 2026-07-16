@@ -55,6 +55,13 @@ function WheelColumn({ values, selectedValue, onChange }: WheelColumnProps) {
         getItemLayout={(_, index) => ({ length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index })}
         contentContainerStyle={{ paddingVertical: PADDING }}
         onMomentumScrollEnd={commitOffset}
+        // A drag released exactly on a snap boundary (no scroll delta) can
+        // skip the momentum/fling phase entirely on some platforms, so
+        // onMomentumScrollEnd never fires even though the list is already
+        // visually settled. This covers that case — commitOffset is a
+        // no-op if the value hasn't actually changed, so it's safe to call
+        // from both handlers.
+        onScrollEndDrag={commitOffset}
         renderItem={({ item }) => (
           <View style={styles.item}>
             <Text style={[styles.itemText, item === selectedValue && styles.itemTextSelected]}>

@@ -20,7 +20,10 @@ const CALIBRATION_FONT_SIZE = 100;
 // Shrinks the fitted size a bit below the absolute max the box allows.
 const FIT_SCALE = 0.95;
 // Small safety margin so bold glyph ink never clips against the cell edge.
-const DIGIT_CELL_MARGIN = 1;
+// Digit cells are rendered at fixed width (see the `isDigit` style below),
+// so this must be slightly above 1 to widen the cell beyond the measured
+// glyph width — at exactly 1 it's a no-op and provides no margin at all.
+const DIGIT_CELL_MARGIN = 1.05;
 
 interface Metrics {
   fontSize: number;
